@@ -1,11 +1,10 @@
 package RationalNumbers;
 
 /**
- *
  * @author Harshita
  * @version 1
  * @since 2016
- *
+ * <p>
  * Created by harshita on 31/8/16.
  */
 class RationalNumber extends Number implements Comparable<RationalNumber> {
@@ -26,7 +25,7 @@ class RationalNumber extends Number implements Comparable<RationalNumber> {
         }
         this.numerator = numerator;
         this.denominator = denominator;
-
+        reduce(this);
     }
 
     public long getNumerator() {
@@ -40,9 +39,9 @@ class RationalNumber extends Number implements Comparable<RationalNumber> {
     /**
      * Calculates gcd of two rational numbers
      *
-     * @param numerator
-     * @param denominator
-     * @return Integer
+     * @param numerator  long numerator
+     * @param denominator  long denominator
+     * @return Long returns GCD
      */
     @TestMe()
     private long gcd(long numerator, long denominator) throws NullPointerException {
@@ -60,12 +59,13 @@ class RationalNumber extends Number implements Comparable<RationalNumber> {
     /**
      * Rational object is reduced to their lowest terms.
      *
-     * @param number
+     * @param number RationalNumber
+     * @return void
      */
     @TestMe
     private void reduce(RationalNumber number) {
-        long common = gcd(Math.abs(number.numerator), number.denominator);
-
+        // long common = gcd(Math.abs(number.numerator), number.denominator);
+        long common = gcd((number.numerator), number.denominator);
         number.numerator = number.numerator / common;
         number.denominator = number.denominator / common;
     }
@@ -74,8 +74,8 @@ class RationalNumber extends Number implements Comparable<RationalNumber> {
     /**
      * Calculates addition of two rational numbers.
      *
-     * @param numberTwo
-     * @return RationalNumbers.RationalNumber
+     * @param numberTwo  RationalNumber
+     * @return RationalNumbers.RationalNumber addition of two rational numbers
      */
     //@TestMe(value1 = 6)
     public RationalNumber addition(RationalNumber numberTwo) {
@@ -93,8 +93,8 @@ class RationalNumber extends Number implements Comparable<RationalNumber> {
     /**
      * Calculates subtraction of two rational numbers
      *
-     * @param numberTwo
-     * @return RationalNumbers.RationalNumber
+     * @param numberTwo  RationalNumber
+     * @return RationalNumbers.RationalNumber subtraction of two rational numbers
      */
     public RationalNumber subtract(RationalNumber numberTwo) {
         long myDenominator = denominator * numberTwo.denominator;
@@ -109,8 +109,8 @@ class RationalNumber extends Number implements Comparable<RationalNumber> {
     /**
      * Calculates multiplication of two rational numbers
      *
-     * @param numberTwo
-     * @return RationalNUmber
+     * @param numberTwo  RationalNumber
+     * @return RationalNUmber MUltiplication of two rational numbers
      */
     public RationalNumber multiply(RationalNumber numberTwo) {
 
@@ -124,17 +124,17 @@ class RationalNumber extends Number implements Comparable<RationalNumber> {
     /**
      * Calculates division of two rational numbers
      *
-     * @param numberTwo
+     * @param numberTwo  RationalNUmber
      * @return RationalNumbers.RationalNumber
      */
     public RationalNumber divide(RationalNumber numberTwo) {
 
-        long temp = numberTwo.numerator;
-        numberTwo.numerator = denominator;
-        numberTwo.denominator = temp;
+//        long temp = numberTwo.numerator;
+//        numberTwo.numerator = denominator;
+//        numberTwo.denominator = temp;
 
-        long myDenominator = denominator * numberTwo.denominator;
-        long myNumerator = numerator * numberTwo.numerator;
+        long myDenominator = denominator * numberTwo.numerator;
+        long myNumerator = numerator * numberTwo.denominator;
         RationalNumber answer = new RationalNumber(myNumerator, myDenominator);
         reduce(answer);
         return answer;
@@ -148,7 +148,18 @@ class RationalNumber extends Number implements Comparable<RationalNumber> {
      */
     @Override
     public String toString() {
+
+        if (getDenominator() == 1) {
+            return (getNumerator() + "");
+        }
+        if (getDenominator() == -1) {
+            return ("-" + getNumerator());
+        }
+        if (getDenominator() < 0) {
+            return ("-" + getNumerator() + "/" + Math.abs(getDenominator()));
+        }
         return (getNumerator() + "/" + getDenominator());
+
     }
 
     /**
@@ -158,7 +169,7 @@ class RationalNumber extends Number implements Comparable<RationalNumber> {
      */
     @Override
     public int intValue() {
-        return (int)((int) numerator/denominator);
+        return (int) ((int) numerator / denominator);
     }
 
     /**
@@ -168,7 +179,7 @@ class RationalNumber extends Number implements Comparable<RationalNumber> {
      */
     @Override
     public long longValue() {
-        return (long) numerator/denominator;
+        return (long) numerator / denominator;
     }
 
     /**
@@ -178,7 +189,7 @@ class RationalNumber extends Number implements Comparable<RationalNumber> {
      */
     @Override
     public float floatValue() {
-        return (float) numerator/denominator;
+        return (float) numerator / denominator;
     }
 
     /**
@@ -189,12 +200,13 @@ class RationalNumber extends Number implements Comparable<RationalNumber> {
     //@TestMe
     @Override
     public double doubleValue() {
-        return (double) numerator/denominator;
+        return (double) numerator / denominator;
     }
 
     /**
      * Compares one rational number with the other
-     * @param number
+     *
+     * @param number RationalNUmber
      * @return Integer
      */
 
