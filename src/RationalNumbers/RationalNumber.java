@@ -1,5 +1,7 @@
 package RationalNumbers;
 
+import java.util.Iterator;
+
 /**
  * @author Harshita
  * @version 1
@@ -7,7 +9,7 @@ package RationalNumbers;
  * <p>
  * Created by harshita on 31/8/16.
  */
-class RationalNumber extends Number implements Comparable<RationalNumber> {
+class RationalNumber extends Number implements Comparable<RationalNumber>,Cloneable {
 
     private long numerator;
     private long denominator;
@@ -26,6 +28,7 @@ class RationalNumber extends Number implements Comparable<RationalNumber> {
         this.numerator = numerator;
         this.denominator = denominator;
         reduce(this);
+
     }
 
     public long getNumerator() {
@@ -39,8 +42,8 @@ class RationalNumber extends Number implements Comparable<RationalNumber> {
     /**
      * Calculates gcd of two rational numbers
      *
-     * @param numerator  long numerator
-     * @param denominator  long denominator
+     * @param numerator   long numerator
+     * @param denominator long denominator
      * @return Long returns GCD
      */
     @TestMe()
@@ -74,7 +77,7 @@ class RationalNumber extends Number implements Comparable<RationalNumber> {
     /**
      * Calculates addition of two rational numbers.
      *
-     * @param numberTwo  RationalNumber
+     * @param numberTwo RationalNumber
      * @return RationalNumbers.RationalNumber addition of two rational numbers
      */
     //@TestMe(value1 = 6)
@@ -93,7 +96,7 @@ class RationalNumber extends Number implements Comparable<RationalNumber> {
     /**
      * Calculates subtraction of two rational numbers
      *
-     * @param numberTwo  RationalNumber
+     * @param numberTwo RationalNumber
      * @return RationalNumbers.RationalNumber subtraction of two rational numbers
      */
     public RationalNumber subtract(RationalNumber numberTwo) {
@@ -109,7 +112,7 @@ class RationalNumber extends Number implements Comparable<RationalNumber> {
     /**
      * Calculates multiplication of two rational numbers
      *
-     * @param numberTwo  RationalNumber
+     * @param numberTwo RationalNumber
      * @return RationalNUmber MUltiplication of two rational numbers
      */
     public RationalNumber multiply(RationalNumber numberTwo) {
@@ -124,7 +127,7 @@ class RationalNumber extends Number implements Comparable<RationalNumber> {
     /**
      * Calculates division of two rational numbers
      *
-     * @param numberTwo  RationalNUmber
+     * @param numberTwo RationalNUmber
      * @return RationalNumbers.RationalNumber
      */
     public RationalNumber divide(RationalNumber numberTwo) {
@@ -218,15 +221,77 @@ class RationalNumber extends Number implements Comparable<RationalNumber> {
         } else if (!(number instanceof RationalNumber)) {
             throw new ClassCastException();
         }
-        if (this.doubleValue() == number.doubleValue()) {
+//        if (this.doubleValue() == number.doubleValue()) {
+//            return 0;
+//        } else if (this.doubleValue() > number.doubleValue()) {
+//            return 1;
+//        } else {
+//            return -1;
+//        }
+
+        if (this.getNumerator()==number.numerator && this.denominator ==number.denominator)
+        {
             return 0;
-        } else if (this.doubleValue() > number.doubleValue()) {
-            return 1;
-        } else {
-            return -1;
+        }
+        else {
+            if( this.numerator >=number.numerator && this.denominator <= number.denominator){
+                return 1;
+            }
+            else return -1;
         }
 
     }
+
+    /**
+     * overriden equals method of object class
+     * @param number
+     * @return boolean true:if hashcodes are equals, false if hashcodes are unequal
+     *
+     */
+    @Override
+    public boolean equals(Object number) {
+
+        if (this ==  number) {
+            return true;
+        }
+        if (!(number instanceof RationalNumber)) {
+            //throw new
+            return false;
+        }
+
+        RationalNumber num = (RationalNumber) number;
+        if (this.hashCode()==num.hashCode()) {
+                return true;
+            }
+        return false;
+    }
+
+    /**
+     * Overriden Clone method
+     * @return RationalNUmber : clone of the object
+     * @throws CloneNotSupportedException
+     */
+
+    @Override
+    protected RationalNumber clone() throws CloneNotSupportedException {
+        return (RationalNumber)super.clone();
+    }
+
+    /**
+     * Overriden hashcode method of object class
+     * @return Integer hashCode
+     */
+    @Override
+    public int hashCode() {
+
+
+        int hashCode = 5;
+        hashCode=(int)(31*hashCode + this.getNumerator());
+        hashCode=(int)(31*hashCode + this.getDenominator());
+        return hashCode;
+    }
+
+
 }
 
 

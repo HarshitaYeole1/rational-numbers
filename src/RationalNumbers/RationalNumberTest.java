@@ -5,8 +5,7 @@ import org.junit.Test;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.Assert.*;
 
@@ -19,85 +18,93 @@ public class RationalNumberTest {
     RationalNumber number1;
     RationalNumber number2;
     RationalNumber number3;
+    RationalNumber number4;
 
     @Before
     public void setUp() throws Exception {
-        number1=new RationalNumber(6L,12L);
-        number2=new RationalNumber(3L,9L);
+        number1 = new RationalNumber(6L, 6L);
+        number2 = new RationalNumber(12L, 12L);
+        number3 = new RationalNumber(4L, 10L);
+        number4 = new RationalNumber(2L, 3L);
 
     }
 
     @Test
-    public void itShouldPrintRationalNumber() throws Exception{
+    public void itShouldPrintRationalNumber() throws Exception {
         String result = number1.toString();
-        assertEquals(result,"1/-2");
+        assertEquals(result, "1/-2");
     }
- 
+
     @Test
     public void itShouldCompareToOneRationalNumberToOther() throws Exception {
-        int expected=1;
-        int actual= number1.compareTo(number2);
-        assertEquals("The number is bigger",expected,actual);
+        int expected = 0;
+        int actual = number1.compareTo(number2);
+        assertEquals("The number is bigger", expected, actual);
     }
 
     @Test
     public void itShouldDoAdditionOfTwoRationalNumbers() throws Exception {
 
-        String expected="-5/6";
-        String actual= number1.addition(number2).toString();
-        assertEquals("test passed",expected,actual);
+        String expected = "-5/6";
+        String actual = number1.addition(number2).toString();
+        assertEquals("test passed", expected, actual);
 
     }
 
     @Test
     public void itShouldDoSubtractionOfTwoRationalNumbers() throws Exception {
-        String expected="-1/6";
-        String actual= number1.subtract(number2).toString();
-        assertEquals("test passed",expected,actual);
+        String expected = "-1/6";
+        String actual = number1.subtract(number2).toString();
+        assertEquals("test passed", expected, actual);
     }
 
     @Test
     public void itShouldDoMultiplicationOfTwoRationalNumbers() throws Exception {
-        String expected="1/6";
-        String actual= number1.multiply(number2).toString();
-        assertEquals("test passed",expected,actual);
+        String expected = "1/6";
+        String actual = number1.multiply(number2).toString();
+        assertEquals("test passed", expected, actual);
     }
 
     @Test
     public void itShouldDoDivisionOfTwoRationalNumbers() throws Exception {
-        String expected="3/2";
-        String actual= number1.divide(number2).toString();
-        assertEquals("test passed",expected,actual);
+        String expected = "3/2";
+        String actual = number1.divide(number2).toString();
+        assertEquals("test passed", expected, actual);
+    }
+
+    @Test(expected = ArithmeticException.class)
+    public void itShouldThrowArithmeticEXceptionForDIvisionByZero() throws Exception {
+        number1.divide(number2).toString();
     }
 
     @Test
     public void itShouldReturnIntValueOfRationalNumber() throws Exception {
-        int expected=0;
-        int actual= number1.intValue();
-        assertEquals(expected,actual);
+        int expected = 0;
+        int actual = number1.intValue();
+        assertEquals(expected, actual);
 
     }
 
     @Test
     public void itShouldReturnLongValueOfRationalNumber() throws Exception {
 
-        long expected=0L;
-        long actual= number1.longValue();
-        assertEquals(expected,actual);
+        long expected = 0L;
+        long actual = number1.longValue();
+        assertEquals(expected, actual);
     }
 
     @Test
     public void itShouldReturnFloatValueOfRationalNumber() throws Exception {
-        float expected=-0.5F;
-        float actual= number1.floatValue();
-        assertEquals(expected,actual,0.0001);
+        float expected = -0.5F;
+        float actual = number1.floatValue();
+        assertEquals(expected, actual, 0.0001);
     }
 
     @Test
     public void itShouldReturnDoubleValueOfRationalNumber() throws Exception {
-        double expected=-0.5;
-        double actual= number1.doubleValue();
-        assertEquals(expected,actual,0.0001);
+        double expected = -0.5;
+        double actual = number1.doubleValue();
+        assertEquals(expected, actual, 0.0001);
     }
 
 //    @Test
@@ -117,7 +124,6 @@ public class RationalNumberTest {
 //        double expected = 0.5;
 //        assertEquals(value, expected, 0.0001);
 //    }
-
 
 
     @Test
@@ -142,9 +148,16 @@ public class RationalNumberTest {
     }
 
     @Test
-    public void isToStringCorrect() throws Exception{
+    public void isToStringCorrect() throws Exception {
         String result = number1.toString();
-        assertEquals("-1",result);
+        assertEquals("-1", result);
     }
 
+    @Test
+    public void itShouldCheckEqualsMethod() throws Exception {
+        number2=number1.clone();
+        System.out.println("hashcode1 is: "+number1.hashCode());
+        System.out.println("hashcode2 is: "+number2.hashCode());
+        assertEquals(true, number1.equals(number2));
+    }
 }
